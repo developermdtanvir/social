@@ -2,19 +2,30 @@ import { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { AiOutlineGoogle } from 'react-icons/ai';
 import { FaFacebookF, FaGithub } from 'react-icons/fa';
+import Swal from 'sweetalert2';
 import loginImage from '../../../src/assets/login/Illustration.svg';
 import { AuthContext } from '../../providers/AuthProvider';
 import './Login.css';
 function Login() {
 
-    const { loginWithGoogle, user } = useContext(AuthContext);
+    const { loginWithGoogle, user, loginWithGithub, loginWithEmailPass } = useContext(AuthContext);
 
     console.log(user);
 
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
 
     const handleLogin = (data) => {
-        console.log(data);
+        const { email, password } = data;
+        loginWithEmailPass(email, password)
+            .then(res => {
+                if (res.user) {
+                    Swal.fire(
+                        'Successfully Login!',
+                        'You clicked the button!',
+                        'success'
+                    )
+                }
+            })
     }
     return (
         <div className=' background-image'>
@@ -30,13 +41,19 @@ function Login() {
                                 <label className="label">
                                     <span className="label-text">Email</span>
                                 </label>
-                                <input {...register('email')} type="email" placeholder="email" className="input input-bordered " />
+                                <input {...register('email', {
+                                    pattern: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/, required: true
+                                })} type="email" placeholder="email" className="input input-bordered " />
+                                {errors.email?.type === 'pattern' && <p className=' text-red-700' role="alert">Wrong Email Address</p>}
                             </div>
                             <div className="form-control">
                                 <label className="label">
                                     <span className="label-text">Password</span>
                                 </label>
-                                <input {...register('password')} type="password" placeholder="password" className="input " />
+                                <input {...register('password', {
+                                    pattern: /^[a-zA-Z0-9!@#$%^&*]{6,16}$/, required: true
+                                })} type="password" placeholder="password" className="input " />
+                                {errors.password?.type === 'pattern' && <p className=' text-red-700' role="alert">Password minumum 6 and maximum 16 chrecter</p>}
                                 <label className="label">
                                     <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
                                 </label>
@@ -50,7 +67,7 @@ function Login() {
                             <br />
                             <div className="flex justify-around items-center">
                                 <FaFacebookF className="text-4xl text-gray-500 border-gray-500 cursor-pointer border-2 rounded-full" />
-                                <FaGithub className="text-4xl text-gray-500 border-gray-500 cursor-pointer border-2 rounded-full" />
+                                <FaGithub onClick={loginWithGithub} className="text-4xl text-gray-500 border-gray-500 cursor-pointer border-2 rounded-full" />
                                 <AiOutlineGoogle onClick={loginWithGoogle} className="text-4xl text-gray-500 border-gray-500 cursor-pointer border-2 rounded-full" />
                             </div>
                         </div>
