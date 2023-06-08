@@ -1,7 +1,7 @@
 import logo from '../assets/logo.png';
 function Navbar() {
     return (
-        <div className="navbar bg-base-200 fixed top-0 z-20 border-b-4">
+        <div className="navbar bg-base-200 fixed top-0 z-50 border-b-4">
             <div className="flex-1">
                 <a className="btn btn-ghost normal-case text-xl">
                     <img className=' h-10' src={logo} alt="" />

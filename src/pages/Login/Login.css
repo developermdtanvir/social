@@ -1,0 +1,5 @@
+.background-image{
+    background-image:url('../../../src/assets/login/authentication.png') ;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
