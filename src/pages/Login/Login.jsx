@@ -1,7 +1,8 @@
 import { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { AiOutlineGoogle } from 'react-icons/ai';
-import { FaFacebookF, FaGithub } from 'react-icons/fa';
+import { FaGithub } from 'react-icons/fa';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import loginImage from '../../../src/assets/login/Illustration.svg';
 import { AuthContext } from '../../providers/AuthProvider';
@@ -10,9 +11,31 @@ function Login() {
 
     const { loginWithGoogle, user, loginWithGithub, loginWithEmailPass } = useContext(AuthContext);
 
-    console.log(user);
 
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
+
+
+
+    const location = useLocation();
+    const navigate = useNavigate();
+
+    const from = location.state?.from?.pathname || '/'
+
+
+    const handleLoginGoogle = () => {
+        loginWithGoogle()
+            .then(res => {
+                navigate(from, { replace: true });
+            })
+    }
+
+    const handleLoginGithub = () => {
+        loginWithGithub()
+            .then(res => {
+                navigate(from, { replace: true });
+            })
+    }
+
 
     const handleLogin = (data) => {
         const { email, password } = data;
@@ -24,9 +47,13 @@ function Login() {
                         'You clicked the button!',
                         'success'
                     )
+                    navigate(from, { replace: true });
                 }
             })
     }
+
+
+
     return (
         <div className=' background-image'>
             <div className="hero min-h-screen ">
@@ -64,11 +91,11 @@ function Login() {
                         </form>
                         <div className='text-center'>
                             <p className=' text-gray-400'>Or sign in with</p>
+                            <Link to='/signup'><p className=' text-red-500'>Are You New User Register Now ! </p></Link>
                             <br />
                             <div className="flex justify-around items-center">
-                                <FaFacebookF className="text-4xl text-gray-500 border-gray-500 cursor-pointer border-2 rounded-full" />
-                                <FaGithub onClick={loginWithGithub} className="text-4xl text-gray-500 border-gray-500 cursor-pointer border-2 rounded-full" />
-                                <AiOutlineGoogle onClick={loginWithGoogle} className="text-4xl text-gray-500 border-gray-500 cursor-pointer border-2 rounded-full" />
+                                <FaGithub onClick={handleLoginGithub} className="text-4xl text-gray-500 border-gray-500 cursor-pointer border-2 rounded-full" />
+                                <AiOutlineGoogle onClick={handleLoginGoogle} className="text-4xl text-gray-500 border-gray-500 cursor-pointer border-2 rounded-full" />
                             </div>
                         </div>
                     </div>

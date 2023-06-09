@@ -1,13 +1,14 @@
+import PostCard from "../components/PostCard";
+import usePost from "../hooks/usePost";
+
 function Home() {
+    const [data, refetch] = usePost();
+    console.log(data);
     return (
-        <div className=" mt-20 w-full mx-auto">
-            <div className="form-control w-full max-w-xs">
-                <input onClick={() => window.my_modal_3.showModal()} type="text" placeholder="Whats On Your Mind" className="input input-bordered w-full max-w-xs rounded-full" />
-                <label className="label">
-                    <span className="label-text-alt">Bottom Left label</span>
-                    <span className="label-text-alt">Bottom Right label</span>
-                </label>
-            </div>
+        <div className="  w-full mx-auto">
+            {
+                data.map(item => <PostCard item={item} />)
+            }
         </div>
     )
 }
