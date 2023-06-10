@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { toast } from 'react-hot-toast';
 
 
 import io from "socket.io-client";
@@ -23,10 +24,17 @@ const Message = () => {
         socket.emit("send_message", { message, room });
     };
 
+    const sendNotificaton = () => {
+        socket.emit('send_notification')
+    }
+
     useEffect(() => {
         socket.on("receive_message", (data) => {
             setMessageReceived(data.message);
         });
+        socket.on("new_notification", (res) => {
+            toast.success(res, 'new notification')
+        })
     }, [socket]);
 
     return (

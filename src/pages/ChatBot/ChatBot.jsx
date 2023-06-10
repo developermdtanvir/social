@@ -3,6 +3,7 @@ import ChatBots from 'react-simple-chatbot';
 import { Segment } from 'semantic-ui-react';
 function ChatBot() {
 
+
     const steps = [
 
         {

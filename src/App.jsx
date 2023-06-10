@@ -1,5 +1,6 @@
 import { useContext } from 'react';
 import { useForm } from 'react-hook-form';
+import { Toaster } from 'react-hot-toast';
 import { RouterProvider } from 'react-router-dom';
 import './App.css';
 import router from './Route/router';
@@ -23,6 +24,7 @@ function App() {
   return (
     <div className=' container mx-auto'>
       <RouterProvider router={router} > </RouterProvider>
+      <Toaster />
 
       <dialog id="my_modal_3" className="modal">
         <form method="dialog" className="modal-box">

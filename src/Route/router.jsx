@@ -33,11 +33,11 @@ const router = createBrowserRouter([
             },
             {
                 path: '/chat',
-                element: <ChatBot />
+                element: <Message />
             },
             {
                 path: '/bot',
-                element: <Message />
+                element: <ChatBot />
             },
         ]
     },

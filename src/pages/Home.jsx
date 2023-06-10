@@ -3,7 +3,6 @@ import loader from '../assets/spinner.gif';
 import PostCard from "../components/PostCard";
 import usePost from "../hooks/usePost";
 import { AuthContext } from '../providers/AuthProvider';
-import ChatBot from './ChatBot/ChatBot';
 
 function Home() {
     const [data, refetch, isLoading] = usePost();
@@ -33,9 +32,6 @@ function Home() {
             {
                 data.map(item => <PostCard react={react} key={item._id} refetch={refetch} item={item} />)
             }
-            <div>
-                <ChatBot />
-            </div>
         </div>
     )
 }
