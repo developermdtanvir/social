@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import LoginLayout from "../Layout/LoginLayout";
 import Main from "../Layout/Main";
 import RegisterLayout from "../Layout/RegisterLayout";
+import ChatBot from "../pages/ChatBot/ChatBot";
 import Home from "../pages/Home";
 import Login from "../pages/Login/Login";
 import Message from "../pages/Message/Message";
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
             },
             {
                 path: '/chat',
+                element: <ChatBot />
+            },
+            {
+                path: '/bot',
                 element: <Message />
             },
         ]
