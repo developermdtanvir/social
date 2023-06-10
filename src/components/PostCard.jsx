@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { AiOutlineHeart, AiOutlineSave } from "react-icons/ai";
 import { FaRegComment } from 'react-icons/fa';
@@ -163,7 +163,7 @@ function PostCard({ item, refetch, react }) {
     }
 
     const [showEmojiPopup, setShowEmojiPopup] = useState(false);
-    const [selectedEmoji, setSelectedEmoji] = useState('');
+    const [selectedEmoji, setSelectedEmoji] = useState(null);
 
     const handleHover = () => {
         setShowEmojiPopup(true);
@@ -176,8 +176,22 @@ function PostCard({ item, refetch, react }) {
     const handleEmojiSelection = (emoji) => {
         setSelectedEmoji(emoji);
         setShowEmojiPopup(false);
-        // Perform desired action with the selected emoji
     };
+
+    useEffect(() => {
+        let timer;
+        if (selectedEmoji) {
+            timer = setTimeout(() => {
+                setSelectedEmoji(null);
+            }, 30000);
+        }
+
+        return () => {
+            clearTimeout(timer);
+        };
+    }, [selectedEmoji]);
+
+
 
 
 
@@ -202,11 +216,11 @@ function PostCard({ item, refetch, react }) {
                 <div className=" flex justify-around bottom-5">
                     <AiOutlineHeart onClick={() => handleReact(item)} className=" text-white text-2xl cursor-pointer" />
                     <div
-                        className="emoji-button"
+                        className="emoji-button relative"
                         onMouseEnter={handleHover}
                         onMouseLeave={handleLeave}
                     >
-                        <button>{selectedEmoji ? selectedEmoji : 'Select Emoji'}</button>
+                        <button className="">{selectedEmoji ? selectedEmoji : 'Select Emoji'}</button>
                         {showEmojiPopup && (
                             <div className="emoji-popup">
                                 <span className="emoji-option" onClick={() => handleEmojiSelection("😍")}>😍</span>

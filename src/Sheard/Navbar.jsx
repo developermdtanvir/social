@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { AiFillSave } from "react-icons/ai";
-import { BsFillChatFill, BsPostcard } from "react-icons/bs";
+import { BsFillChatFill, BsPersonCircle, BsPostcard } from "react-icons/bs";
 import { CgProfile } from "react-icons/cg";
 import { FiLogOut } from "react-icons/fi";
 import { Link } from "react-router-dom";
@@ -18,10 +18,12 @@ function Navbar() {
         <li ><Link to='/profile'> <CgProfile /> Profile</Link></li>
         <li onClick={signOutUser}><Link ><FiLogOut /> Logout</Link></li>
         <div className="divider"></div>
+        <li><Link to='/about' ><BsPersonCircle /> About</Link></li>
+        <div className="divider"></div>
 
 
 
-        <li className="mt-2" ><Link to='/chat'><BsFillChatFill /> Chat</Link></li>
+        <li  ><Link to='/chat'><BsFillChatFill /> Chat</Link></li>
     </>
 
     return (

@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { AiFillSave } from "react-icons/ai";
-import { BsFillChatFill, BsPostcard } from 'react-icons/bs';
+import { BsFillChatFill, BsPersonCircle, BsPostcard } from 'react-icons/bs';
 import { CgProfile } from 'react-icons/cg';
 import { FiLogOut } from 'react-icons/fi';
 import Modal from 'react-modal';
@@ -101,14 +101,6 @@ function Main() {
 
     }
 
-    // <li><Link to='/login'><BsPostcard /> All Posts</Link></li>
-    // <li><Link to='/login'><AiOutlineUsergroupAdd />Following</Link></li>
-    // <li><Link to='/login'><AiFillSave />Save</Link></li>
-    // <li ><Link to='/profile'> <CgProfile /> Profile</Link></li>
-    // <li onClick={signOutUser}><Link ><FiLogOut /> Logout</Link></li>
-    // <div className="divider"></div>
-
-    // <li onClick={openModal} className="bg-green-600 rounded-md font-bold text-lg"><Link >Create Post</Link></li>
 
     return (
         <div>
@@ -130,6 +122,7 @@ function Main() {
                             <li><Link to='/save'><AiFillSave />Save</Link></li>
                             <li ><Link to='/profile'> <CgProfile /> Profile</Link></li>
                             <li onClick={signOutUser}><Link ><FiLogOut /> Logout</Link></li>
+                            <li ><Link to='/about' ><BsPersonCircle /> About</Link></li>
                             <div className="divider"></div>
 
                             <li onClick={openModal} className="bg-green-600 rounded-md font-bold text-lg"><Link >Create Post</Link></li>

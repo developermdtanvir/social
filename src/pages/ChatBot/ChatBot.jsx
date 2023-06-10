@@ -9,45 +9,31 @@ function ChatBot() {
         {
 
             id: "Greet",
-
             message: "Hello, Welcome to our Network",
-
             trigger: "Done",
 
         },
 
         {
-
             id: "Done",
-
             message: "Please enter your name!",
-
             trigger: "waiting1",
-
         },
 
         {
-
             id: "waiting1",
-
             user: true,
-
             trigger: "Name",
 
         },
 
         {
-
             id: "Name",
-
             message: "Hi {previousValue}, Please select your issue",
-
             trigger: "issues",
 
         },
-
         {
-
             id: "issues",
 
             options: [
@@ -67,11 +53,8 @@ function ChatBot() {
             ],
 
         },
-
         {
-
             id: "React",
-
             message:
 
                 "Thanks for letting your React issue, Our team will resolve your issue ASAP",
@@ -81,15 +64,12 @@ function ChatBot() {
         },
 
         {
-
             id: "Angular",
-
             message:
 
                 "Thanks for letting your Angular issue, Our team will resolve your issue ASAP",
 
             end: true,
-
         },
 
     ];
