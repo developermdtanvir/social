@@ -4,6 +4,9 @@ import Main from "../Layout/Main";
 import RegisterLayout from "../Layout/RegisterLayout";
 import Home from "../pages/Home";
 import Login from "../pages/Login/Login";
+import Message from "../pages/Message/Message";
+import Profile from "../pages/Profile/Profile";
+import Save from "../pages/Save/Save";
 import SignUp from "../pages/SignUp/SignUp";
 import PraivetRoute from "./PraivetRoute";
 
@@ -17,7 +20,20 @@ const router = createBrowserRouter([
                 path: '/',
                 element: <PraivetRoute><Home /></PraivetRoute>
 
-            }
+            },
+            {
+                path: '/profile',
+                element: <Profile />
+
+            },
+            {
+                path: '/save',
+                element: <Save />
+            },
+            {
+                path: '/chat',
+                element: <Message />
+            },
         ]
     },
     {

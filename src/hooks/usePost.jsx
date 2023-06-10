@@ -9,7 +9,7 @@ const usePost = () => {
             return res.json();
         }
     })
-    return [data, refetch]
+    return [data, refetch, isLoading]
 }
 
 export default usePost;

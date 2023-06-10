@@ -91,7 +91,7 @@ function Login() {
                         </form>
                         <div className='text-center'>
                             <p className=' text-gray-400'>Or sign in with</p>
-                            <Link to='/signup'><p className=' text-red-500'>Are You New User Register Now ! </p></Link>
+                            <Link to='/signup'><p className=' text-red-500'>Are You New User <span className='underline'>Register</span> Now ! </p></Link>
                             <br />
                             <div className="flex justify-around items-center">
                                 <FaGithub onClick={handleLoginGithub} className="text-4xl text-gray-500 border-gray-500 cursor-pointer border-2 rounded-full" />

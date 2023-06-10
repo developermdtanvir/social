@@ -1,3 +1,53 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+
+.like-button {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+  }
+  
+  .like-icon {
+    width: 30px;
+    height: 30px;
+    background-color: #4267B2;
+    background-image: url('path_to_like_icon.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 70%;
+    border-radius: 50%;
+    display: inline-block;
+    vertical-align: middle;
+  }
+  
+  .like-count {
+    margin-left: 5px;
+    vertical-align: middle;
+  }
+  
+  .emoji-popup {
+    position: absolute;
+    top: 35px;
+    left: -5px;
+    display: flex;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 5px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+  }
+  
+  .emoji-option {
+    margin-right: 5px;
+    font-size: 20px;
+    cursor: pointer;
+  }
+  
+  /* Adjust the emoji popup position on hover */
+  .like-button:hover .emoji-popup {
+    top: 40px;
+  }
+  
