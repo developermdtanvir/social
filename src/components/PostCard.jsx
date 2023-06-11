@@ -19,7 +19,7 @@ const customStyles = {
 };
 
 
-function PostCard({ item, refetch, react }) {
+function PostCard({ item, refetch, react, showButton }) {
 
 
 
@@ -197,20 +197,58 @@ function PostCard({ item, refetch, react }) {
 
     const photo = user?.photoURL || 'https://i.ibb.co/411LDqh/fashion-boy-with-yellow-jacket-blue-pants.jpg'
 
+
+
+
     const handleDeletePost = id => {
-        fetch(`http://localhost:3000/posts/${id}`, {
-            method: 'DELETE',
-        }).then(res => res.json())
-            .then(data => {
-                if (data.deletedCount > 0) {
-                    Swal.fire(
-                        'Deleted Sucessfully',
-                        'You clicked the button!',
-                        'success'
-                    )
-                    refetch()
-                }
-            })
+
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: 'btn btn-success',
+                cancelButton: 'btn btn-danger'
+            },
+            buttonsStyling: false
+        })
+
+        swalWithBootstrapButtons.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'No, cancel!',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                fetch(`http://localhost:3000/posts/${id}`, {
+                    method: 'DELETE',
+                }).then(res => res.json())
+                    .then(data => {
+                        if (data.deletedCount > 0) {
+                            swalWithBootstrapButtons.fire(
+                                'Deleted!',
+                                'Your file has been deleted.',
+                                'success'
+                            )
+                            refetch()
+                        }
+                    })
+
+
+            } else if (
+                /* Read more about handling dismissals below */
+                result.dismiss === Swal.DismissReason.cancel
+            ) {
+                swalWithBootstrapButtons.fire(
+                    'Cancelled',
+                    'Your imaginary file is safe :)',
+                    'error'
+                )
+            }
+        })
+
+
+
     }
 
     return (
@@ -244,7 +282,7 @@ function PostCard({ item, refetch, react }) {
                         )}
                     </div>
                     <FaRegComment className=" text-white text-2xl cursor-pointer" />
-                    <span onClick={() => handleDeletePost(item._id)} className="btn  btn-secondary">Delete Post</span>
+                    {showButton && <span onClick={() => handleDeletePost(item._id)} className="btn  btn-secondary">Delete Post</span>}
                     <div className={item.color}>
                         <AiOutlineSave onClick={() => handelSavePost(item._id)} className={` text-2xl cursor-pointer`} />
                     </div>

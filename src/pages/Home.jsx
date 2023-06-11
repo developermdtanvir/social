@@ -9,6 +9,9 @@ function Home() {
     const { user } = useContext(AuthContext)
     const [react, setReact] = useState([]);
 
+    const [showButton, setShowButton] = useState(false)
+
+
 
 
     if (isLoading) {
@@ -30,7 +33,7 @@ function Home() {
     return (
         <div className="  w-full mx-auto space-y-5">
             {
-                data.map(item => <PostCard react={react} key={item._id} refetch={refetch} item={item} />)
+                data.map(item => <PostCard showButton={showButton} react={react} key={item._id} refetch={refetch} item={item} />)
             }
         </div>
     )

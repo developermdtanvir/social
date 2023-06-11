@@ -86,7 +86,7 @@ function Profile() {
             </div>
             <div>
                 {
-                    data.map(item => <PostCard item={item} key={item._id} />)
+                    data.map(item => <PostCard showButton={true} item={item} key={item._id} />)
                 }
             </div>
         </div>
