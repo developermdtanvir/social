@@ -197,7 +197,21 @@ function PostCard({ item, refetch, react }) {
 
     const photo = user?.photoURL || 'https://i.ibb.co/411LDqh/fashion-boy-with-yellow-jacket-blue-pants.jpg'
 
-
+    const handleDeletePost = id => {
+        fetch(`http://localhost:3000/posts/${id}`, {
+            method: 'DELETE',
+        }).then(res => res.json())
+            .then(data => {
+                if (data.deletedCount > 0) {
+                    Swal.fire(
+                        'Deleted Sucessfully',
+                        'You clicked the button!',
+                        'success'
+                    )
+                    refetch()
+                }
+            })
+    }
 
     return (
         <div>
@@ -212,7 +226,6 @@ function PostCard({ item, refetch, react }) {
                 <div onClick={openModal}>
                     <span onClick={() => filterLike(item)} className=" text-red-600 underline cursor-pointer">show like</span>
                 </div>
-
                 <div className=" flex justify-around bottom-5">
                     <AiOutlineHeart onClick={() => handleReact(item)} className=" text-white text-2xl cursor-pointer" />
                     <div
@@ -231,10 +244,12 @@ function PostCard({ item, refetch, react }) {
                         )}
                     </div>
                     <FaRegComment className=" text-white text-2xl cursor-pointer" />
+                    <span onClick={() => handleDeletePost(item._id)} className="btn  btn-secondary">Delete Post</span>
                     <div className={item.color}>
                         <AiOutlineSave onClick={() => handelSavePost(item._id)} className={` text-2xl cursor-pointer`} />
                     </div>
                 </div>
+
                 <div className=" flex justify-center pb-2 ">
                     <div className="avatar">
                         <div className="w-14 rounded-full">
