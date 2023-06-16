@@ -9,7 +9,7 @@ function Save() {
     const { refetch, isLoading, data } = useQuery({
         queryKey: ['post', color],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:3000/post?color=${color}`)
+            const res = await fetch(`http://localhost:3000/posts?color=${color}`)
             return res.json();
         }
     })

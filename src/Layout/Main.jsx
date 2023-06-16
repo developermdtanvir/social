@@ -74,7 +74,7 @@ function Main() {
                     const email = user?.email
                     const userName = user?.displayName
                     const postData = { post, image, email, userName }
-                    fetch('http://localhost:3000/post',
+                    fetch('http://localhost:3000/posts',
                         {
                             method: 'POST',
                             headers: {

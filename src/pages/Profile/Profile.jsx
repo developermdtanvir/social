@@ -60,7 +60,7 @@ function Profile() {
 
     return (
         <div>
-            <div className="hero min-h-screen bg-base-200">
+            <div className="hero lg:w-[1000px] bg-base-200">
 
                 <div className="hero-content flex-col lg:flex-row-reverse">
                     <div className="avatar">

@@ -11,7 +11,7 @@ const Message = () => {
 
     // Messages States
     const [message, setMessage] = useState("");
-    const [messageReceived, setMessageReceived] = useState("");
+    const [messageReceived, setMessageReceived] = useState([]);
 
 
     const joinRoom = () => {
@@ -30,7 +30,7 @@ const Message = () => {
 
     useEffect(() => {
         socket.on("receive_message", (data) => {
-            setMessageReceived(data.message);
+            setMessageReceived(() => [...messageReceived, data.message]);
         });
         socket.on("new_notification", (res) => {
             toast.success(res, 'new notification')

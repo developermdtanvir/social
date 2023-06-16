@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { AiOutlineHeart, AiOutlineSave } from "react-icons/ai";
+import { AiOutlineSave } from "react-icons/ai";
 import { FaRegComment } from 'react-icons/fa';
 import Modal from 'react-modal';
 import Swal from "sweetalert2";
@@ -144,7 +144,7 @@ function PostCard({ item, refetch, react, showButton }) {
 
 
 
-        fetch(`http://localhost:3000/post/${id}?email=${user?.email}`, {
+        fetch(`http://localhost:3000/posts/${id}?email=${user?.email}`, {
             method: 'PATCH',
         }).then(res => res.json())
             .then(data => {
@@ -162,37 +162,45 @@ function PostCard({ item, refetch, react, showButton }) {
 
     }
 
-    const [showEmojiPopup, setShowEmojiPopup] = useState(false);
-    const [selectedEmoji, setSelectedEmoji] = useState(null);
-
-    const handleHover = () => {
-        setShowEmojiPopup(true);
-    };
-
-    const handleLeave = () => {
-        setShowEmojiPopup(false);
-    };
-
-    const handleEmojiSelection = (emoji) => {
-        setSelectedEmoji(emoji);
-        setShowEmojiPopup(false);
-    };
+    const [isHovered, setIsHovered] = useState(false);
+    const [isReactionHovered, setIsReactionHovered] = useState(false);
+    const [isDelayActive, setIsDelayActive] = useState(false);
+    const [selectedReaction, setSelectedReaction] = useState(null);
 
     useEffect(() => {
-        let timer;
-        if (selectedEmoji) {
-            timer = setTimeout(() => {
-                setSelectedEmoji(null);
-            }, 30000);
+        let reactionTimer;
+
+        if (isHovered || isReactionHovered) {
+            setIsDelayActive(true);
+            reactionTimer = setTimeout(() => {
+                setIsReactionVisible(true);
+            }, 200);
+        } else if (isDelayActive) {
+            reactionTimer = setTimeout(() => {
+                setIsReactionVisible(false);
+                setSelectedReaction(null);
+                setIsDelayActive(false);
+            }, 2000);
         }
 
         return () => {
-            clearTimeout(timer);
+            clearTimeout(reactionTimer);
         };
-    }, [selectedEmoji]);
+    }, [isHovered, isReactionHovered]);
 
+    const handleMouseEnter = () => {
+        setIsHovered(true);
+    };
 
+    const handleMouseLeave = () => {
+        setIsHovered(false);
+        setIsReactionHovered(false);
+    };
 
+    const handleReactionSelect = (reaction) => {
+        setSelectedReaction(reaction);
+        setIsReactionHovered(true);
+    };
 
 
     const photo = user?.photoURL || 'https://i.ibb.co/411LDqh/fashion-boy-with-yellow-jacket-blue-pants.jpg'
@@ -265,20 +273,34 @@ function PostCard({ item, refetch, react, showButton }) {
                     <span onClick={() => filterLike(item)} className=" text-red-600 underline cursor-pointer">show like</span>
                 </div>
                 <div className=" flex justify-around bottom-5">
-                    <AiOutlineHeart onClick={() => handleReact(item)} className=" text-white text-2xl cursor-pointer" />
                     <div
-                        className="emoji-button relative"
-                        onMouseEnter={handleHover}
-                        onMouseLeave={handleLeave}
+                        className="cursor-pointer"
+                        onMouseEnter={handleMouseEnter}
+                        onMouseLeave={handleMouseLeave}
+                        style={{ position: 'relative', display: 'inline-block' }}
                     >
-                        <button className="">{selectedEmoji ? selectedEmoji : 'Select Emoji'}</button>
-                        {showEmojiPopup && (
-                            <div className="emoji-popup">
-                                <span className="emoji-option" onClick={() => handleEmojiSelection("😍")}>😍</span>
-                                <span className="emoji-option" onClick={() => handleEmojiSelection("👍")}>👍</span>
-                                <span className="emoji-option" onClick={() => handleEmojiSelection("😆")}>😆</span>
-                                {/* Add more emoji options as needed */}
+                        {isHovered && (
+                            <div style={{
+                                position: 'absolute',
+                                top: '100%',
+                                left: '50%',
+                                transform: 'translateX(-50%)',
+                                backgroundColor: '#f1f1f1',
+                                padding: '5px',
+                                borderRadius: '5px',
+                                boxShadow: '0px 2px 5px rgba(0, 0, 0, 0.2)',
+                            }}>
+                                <span className="cursor-pointer" onClick={() => handleReactionSelect('like 👍')}>👍</span>
+                                <span className="cursor-pointer" onClick={() => handleReactionSelect('love ❤️')}>❤️</span>
+                                <span className="cursor-pointer" onClick={() => handleReactionSelect('angry 😡')}>😡</span>
+                                <span className="cursor-pointer" onClick={() => handleReactionSelect('haha 😄')}>😄</span>
                             </div>
+                        )}
+
+                        {selectedReaction ? (
+                            <span>{selectedReaction}</span>
+                        ) : (
+                            <button className="cursor-pointer">Like</button>
                         )}
                     </div>
                     <FaRegComment className=" text-white text-2xl cursor-pointer" />
@@ -294,7 +316,7 @@ function PostCard({ item, refetch, react, showButton }) {
                             <img src={photo} />
                         </div>
                     </div>
-                    <input className=" input rounded-full" {...register('comment')} placeholder="Wright a comment ............." type="text" />
+                    <input className=" input rounded-full" {...register('comment')} placeholder="Write a comment ............." type="text" />
                 </div>
             </form>
             <div onClick={() => window.my_modal_3.showModal()} className="flex justify-center">
