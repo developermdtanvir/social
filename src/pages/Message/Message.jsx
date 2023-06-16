@@ -24,8 +24,8 @@ const Message = () => {
         socket.emit("send_message", { message, room });
     };
 
-    const sendNotificaton = () => {
-        socket.emit('send_notification')
+    const sendNotificaton = (number) => {
+        socket.emit('send_notification', number)
     }
 
     useEffect(() => {
