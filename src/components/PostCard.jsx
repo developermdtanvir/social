@@ -42,7 +42,7 @@ function PostCard({ item, refetch, react, showButton }) {
     }
 
 
-    const { register, handleSubmit } = useForm()
+    const { register, handleSubmit, reset } = useForm()
 
     const { user, setComment } = useContext(AuthContext);
 
@@ -55,7 +55,8 @@ function PostCard({ item, refetch, react, showButton }) {
     }
 
     const postSubmit = (data) => {
-        const { comment } = data;
+        const { comment, form } = data;
+        reset()
         const commentdata = { comment, email: user?.email, name: user?.displayName, postId: item._id }
         if (user) {
             fetch(`http://localhost:3000/comment`, {
@@ -280,7 +281,7 @@ function PostCard({ item, refetch, react, showButton }) {
                         style={{ position: 'relative', display: 'inline-block' }}
                     >
                         {isHovered && (
-                            <div style={{
+                            <div className=" duration-700" style={{
                                 position: 'absolute',
                                 top: '100%',
                                 left: '50%',
